@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { connectToDatabase } from "@/lib/db";
 import { Employee } from "@/models/Employee";
 import { Attendance } from "@/models/Attendance";
-// import { getTranslations } from "next-intl/server";
+import { getTranslations } from "@/lib/translations";
 
 function initialsOf(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -31,7 +31,7 @@ export default async function DashboardPage({
   if (!session) redirect(`/${locale}/login`);
   await connectToDatabase();
 
-  // const t = await getTranslations();
+  const t = getTranslations(locale);
 
   const totalEmployees = await Employee.countDocuments();
 
@@ -114,7 +114,7 @@ export default async function DashboardPage({
 
   return (
     <div className="space-y-6 min-w-0">
-      <h1 className="text-2xl font-semibold">Boshqaruv paneli</h1>
+      <h1 className="text-2xl font-semibold">{t("dashboard.title")}</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 min-w-0">
         <div
           className="p-4 rounded min-w-0"

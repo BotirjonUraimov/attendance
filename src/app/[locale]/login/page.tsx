@@ -2,10 +2,14 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-// import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
+import { getTranslations } from "@/lib/translations";
 
 export default function LoginPage() {
-  // const t = useTranslations();
+  const pathname = usePathname();
+  const locale = pathname.startsWith("/en") ? "en" : "uz";
+  const t = getTranslations(locale);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +23,7 @@ export default function LoginPage() {
       redirect: true,
       callbackUrl: "/uz",
     });
-    if (res?.error) setError("Invalid credentials");
+    if (res?.error) setError(t("auth.invalidCredentials"));
   }
 
   return (
@@ -35,10 +39,10 @@ export default function LoginPage() {
           className="text-xl font-semibold"
           style={{ color: "var(--color-neutral-900)" }}
         >
-          Admin Login
+          {t("auth.adminLogin")}
         </h1>
         <div className="space-y-2">
-          <label className="block text-sm">Email</label>
+          <label className="block text-sm">{t("auth.email")}</label>
           <input
             type="email"
             className="w-full border rounded px-3 py-2"
@@ -47,7 +51,7 @@ export default function LoginPage() {
           />
         </div>
         <div className="space-y-2">
-          <label className="block text-sm">Password</label>
+          <label className="block text-sm">{t("auth.password")}</label>
           <input
             type="password"
             className="w-full border rounded px-3 py-2"
@@ -65,7 +69,7 @@ export default function LoginPage() {
           className="w-full rounded px-3 py-2 text-white"
           style={{ background: "var(--color-primary)" }}
         >
-          Sign in
+          {t("auth.signIn")}
         </button>
       </form>
     </div>

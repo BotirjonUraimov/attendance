@@ -5,8 +5,8 @@ import { authOptions } from "@/server/auth/config";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-// import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-// import { getTranslations } from "next-intl/server";
+import { SimpleLanguageSwitcher } from "@/components/SimpleLanguageSwitcher";
+import { getTranslations } from "@/lib/translations";
 
 export default async function DashboardLayout({
   children,
@@ -19,7 +19,7 @@ export default async function DashboardLayout({
   const session = await getServerSession(authOptions);
   if (!session) redirect(`/${locale}/login`);
 
-  // const t = await getTranslations();
+  const t = getTranslations(locale);
   return (
     <div
       className="min-h-screen grid grid-rows-[56px_1fr]"
@@ -42,44 +42,44 @@ export default async function DashboardLayout({
         }}
       >
         <div className="font-semibold shrink-0 text-sm sm:text-base">
-          Davomat Admin
+          {t("common.appTitle")}
         </div>
         <nav className="flex-1 min-w-0 flex items-center gap-2 sm:gap-4 text-xs sm:text-sm overflow-x-auto whitespace-nowrap">
           <Link
             className="hover:underline text-white/90 hover:text-white"
             href={`/${locale}`}
           >
-            Boshqaruv paneli
+            {t("nav.dashboard")}
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
             href={`/${locale}/employees`}
           >
-            Xodimlar
+            {t("nav.employees")}
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
             href={`/${locale}/attendance`}
           >
-            Davomat
+            {t("nav.attendance")}
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
             href={`/${locale}/timesheets`}
           >
-            Ish vaqtlari
+            {t("nav.timesheets")}
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
             href={`/${locale}/payroll`}
           >
-            Oylik hisob
+            {t("nav.payroll")}
           </Link>
         </nav>
-        {/* <LanguageSwitcher /> */}
+        <SimpleLanguageSwitcher />
         <form action="/api/auth/signout" method="post" className="shrink-0">
           <Button type="submit" variant="secondary" size="sm">
-            Chiqish
+            {t("nav.signOut")}
           </Button>
         </form>
       </header>
