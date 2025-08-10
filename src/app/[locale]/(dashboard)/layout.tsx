@@ -5,13 +5,21 @@ import { authOptions } from "@/server/auth/config";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
+// import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+// import { getTranslations } from "next-intl/server";
+
 export default async function DashboardLayout({
   children,
+  params,
 }: {
   children: ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
+
+  // const t = await getTranslations();
   return (
     <div
       className="min-h-screen grid grid-rows-[56px_1fr]"
@@ -33,42 +41,45 @@ export default async function DashboardLayout({
           overflowX: "hidden",
         }}
       >
-        <div className="font-semibold shrink-0 text-sm sm:text-base">Admin</div>
+        <div className="font-semibold shrink-0 text-sm sm:text-base">
+          Davomat Admin
+        </div>
         <nav className="flex-1 min-w-0 flex items-center gap-2 sm:gap-4 text-xs sm:text-sm overflow-x-auto whitespace-nowrap">
           <Link
             className="hover:underline text-white/90 hover:text-white"
-            href="/"
+            href={`/${locale}`}
           >
-            Dashboard
+            Boshqaruv paneli
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
-            href="/employees"
+            href={`/${locale}/employees`}
           >
-            Employees
+            Xodimlar
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
-            href="/attendance"
+            href={`/${locale}/attendance`}
           >
-            Attendance
+            Davomat
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
-            href="/timesheets"
+            href={`/${locale}/timesheets`}
           >
-            Timesheets
+            Ish vaqtlari
           </Link>
           <Link
             className="hover:underline text-white/90 hover:text-white"
-            href="/payroll"
+            href={`/${locale}/payroll`}
           >
-            Payroll
+            Oylik hisob
           </Link>
         </nav>
+        {/* <LanguageSwitcher /> */}
         <form action="/api/auth/signout" method="post" className="shrink-0">
           <Button type="submit" variant="secondary" size="sm">
-            Sign out
+            Chiqish
           </Button>
         </form>
       </header>
@@ -84,22 +95,31 @@ export default async function DashboardLayout({
           className="hidden lg:block border-r p-4 space-y-2"
           style={{ background: "var(--color-accent)" }}
         >
-          <div className="text-sm text-neutral-700">Navigation</div>
+          <div className="text-sm text-neutral-700">Navigatsiya</div>
           <div className="space-y-1 text-sm">
-            <Link className="block hover:underline" href="/">
-              Dashboard
+            <Link className="block hover:underline" href={`/${locale}`}>
+              Boshqaruv paneli
             </Link>
-            <Link className="block hover:underline" href="/employees">
-              Employees
+            <Link
+              className="block hover:underline"
+              href={`/${locale}/employees`}
+            >
+              Xodimlar
             </Link>
-            <Link className="block hover:underline" href="/attendance">
-              Attendance
+            <Link
+              className="block hover:underline"
+              href={`/${locale}/attendance`}
+            >
+              Davomat
             </Link>
-            <Link className="block hover:underline" href="/timesheets">
-              Timesheets
+            <Link
+              className="block hover:underline"
+              href={`/${locale}/timesheets`}
+            >
+              Ish vaqtlari
             </Link>
-            <Link className="block hover:underline" href="/payroll">
-              Payroll
+            <Link className="block hover:underline" href={`/${locale}/payroll`}>
+              Oylik hisob
             </Link>
           </div>
         </aside>

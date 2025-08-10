@@ -2,8 +2,10 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+// import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
+  // const t = useTranslations();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -15,7 +17,7 @@ export default function LoginPage() {
       email,
       password,
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: "/uz",
     });
     if (res?.error) setError("Invalid credentials");
   }

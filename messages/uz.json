@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "dashboard": "Boshqaruv paneli",
+    "employees": "Xodimlar",
+    "attendance": "Davomat",
+    "timesheets": "Ish vaqtlari",
+    "payroll": "Oylik hisob",
+    "signOut": "Chiqish"
+  },
+  "auth": {
+    "adminLogin": "Administrator kirishi",
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "signIn": "Kirish",
+    "invalidCredentials": "Noto'g'ri ma'lumotlar"
+  },
+  "dashboard": {
+    "title": "Boshqaruv paneli",
+    "totalEmployees": "Xodimlar",
+    "presentToday": "Bugun kelganlar",
+    "daysThisMonth": "Kunlar (Bu oy)",
+    "pendingExceptions": "Kutilayotgan istisnolar",
+    "employeesThisMonth": "Xodimlar (Bu oy)",
+    "full": "to'liq",
+    "half": "yarim",
+    "abs": "yo'q",
+    "leave": "ta'til"
+  },
+  "employees": {
+    "title": "Xodimlar",
+    "addEmployee": "Xodim qo'shish",
+    "directory": "Katalog",
+    "firstName": "Ism",
+    "lastName": "Familiya",
+    "email": "Elektron pochta",
+    "basePay": "Asosiy maosh",
+    "status": "Holat",
+    "name": "Ism",
+    "addEmployeeButton": "Xodim qo'shish"
+  },
+  "attendance": {
+    "title": "Davomat",
+    "selectEmployees": "Xodimlarni tanlang",
+    "date": "Sana",
+    "type": "Turi",
+    "portion": "Qismi",
+    "present": "Kelgan",
+    "absent": "Kelmagan",
+    "leave": "Ta'til",
+    "holiday": "Bayram",
+    "fullDay": "To'liq kun",
+    "halfDay": "Yarim kun",
+    "save": "Saqlash"
+  },
+  "timesheets": {
+    "title": "Ish vaqtlari"
+  },
+  "payroll": {
+    "title": "Oylik hisob"
+  },
+  "common": {
+    "appTitle": "Davomat Admin",
+    "navigation": "Navigatsiya",
+    "loading": "Yuklanmoqda...",
+    "error": "Xato",
+    "success": "Muvaffaqiyat"
+  }
+}

@@ -5,6 +5,7 @@ import { upsertAttendance } from "./actions";
 import { connectToDatabase } from "@/lib/db";
 import { Employee } from "@/models/Employee";
 import { EmployeeChecklist } from "./components/EmployeeChecklist";
+// import { getTranslations } from "next-intl/server";
 
 function todayIsoDate() {
   const d = new Date();
@@ -28,10 +29,17 @@ type LeanEmployeeDoc = {
   email: string;
 };
 
-export default async function AttendancePage() {
+export default async function AttendancePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
   await connectToDatabase();
+
+  // const t = await getTranslations();
   const docs = (await Employee.find()
     .sort({ firstName: 1, lastName: 1 })
     .lean()) as unknown as LeanEmployeeDoc[];
@@ -44,19 +52,19 @@ export default async function AttendancePage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Attendance</h1>
+      <h1 className="text-xl font-semibold">Davomat</h1>
       <form
         action={upsertAttendance}
         className="grid grid-cols-1 lg:grid-cols-6 gap-4"
       >
         <div className="lg:col-span-2 border rounded p-3 max-h-72 overflow-auto">
-          <div className="text-sm font-medium mb-2">Select employees</div>
+          <div className="text-sm font-medium mb-2">Xodimlarni tanlang</div>
           <EmployeeChecklist employees={employees} />
           <input type="hidden" name="employeeId" />
         </div>
         <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-3 content-start">
           <div>
-            <label className="block text-sm mb-1">Date</label>
+            <label className="block text-sm mb-1">Sana</label>
             <input
               name="date"
               type="date"
@@ -65,23 +73,23 @@ export default async function AttendancePage() {
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">Type</label>
+            <label className="block text-sm mb-1">Turi</label>
             <select name="type" className="border rounded px-2 py-1 w-full">
-              <option value="present">Present</option>
-              <option value="absent">Absent</option>
-              <option value="leave">Leave</option>
-              <option value="holiday">Holiday</option>
+              <option value="present">Kelgan</option>
+              <option value="absent">Kelmagan</option>
+              <option value="leave">Ta'til</option>
+              <option value="holiday">Bayram</option>
             </select>
           </div>
           <div>
-            <label className="block text-sm mb-1">Portion</label>
+            <label className="block text-sm mb-1">Qismi</label>
             <select
               name="portion"
               defaultValue="full"
               className="border rounded px-2 py-1 w-full"
             >
-              <option value="full">Full day</option>
-              <option value="half">Half day</option>
+              <option value="full">To'liq kun</option>
+              <option value="half">Yarim kun</option>
             </select>
           </div>
           <div className="md:col-span-3">

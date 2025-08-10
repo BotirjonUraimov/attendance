@@ -26,7 +26,16 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/uz/login",
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Redirect to Uzbek locale by default
+      if (url === baseUrl) return `${baseUrl}/uz`;
+      if (url.startsWith("/")) return `${baseUrl}/uz${url}`;
+      if (url.startsWith(baseUrl)) return url;
+      return `${baseUrl}/uz`;
+    },
   },
 };
 

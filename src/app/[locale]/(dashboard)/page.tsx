@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { connectToDatabase } from "@/lib/db";
 import { Employee } from "@/models/Employee";
 import { Attendance } from "@/models/Attendance";
+// import { getTranslations } from "next-intl/server";
 
 function initialsOf(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -20,10 +21,17 @@ function colorFromString(input: string) {
   return `hsl(${hue} 70% 40%)`;
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
   await connectToDatabase();
+
+  // const t = await getTranslations();
 
   const totalEmployees = await Employee.countDocuments();
 
@@ -106,42 +114,44 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6 min-w-0">
-      <h1 className="text-2xl font-semibold">Dashboard</h1>
+      <h1 className="text-2xl font-semibold">Boshqaruv paneli</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 min-w-0">
         <div
           className="p-4 rounded min-w-0"
           style={{ background: "var(--color-accent)" }}
         >
-          <div className="text-sm text-neutral-700">Employees</div>
+          <div className="text-sm text-neutral-700">Xodimlar</div>
           <div className="text-2xl font-semibold">{totalEmployees}</div>
         </div>
         <div
           className="p-4 rounded border min-w-0"
           style={{ borderColor: "var(--color-secondary)" }}
         >
-          <div className="text-sm text-neutral-700">Present Today</div>
+          <div className="text-sm text-neutral-700">Bugun kelganlar</div>
           <div className="text-2xl font-semibold">{presentToday}</div>
         </div>
         <div
           className="p-4 rounded border min-w-0"
           style={{ borderColor: "var(--color-secondary)" }}
         >
-          <div className="text-sm text-neutral-700">Days (This Month)</div>
+          <div className="text-sm text-neutral-700">Kunlar (Bu oy)</div>
           <div className="text-2xl font-semibold break-words">
-            {fullDays} full · {halfDays} half
+            {fullDays} to'liq · {halfDays} yarim
           </div>
         </div>
         <div
           className="p-4 rounded border min-w-0"
           style={{ borderColor: "var(--color-warning)" }}
         >
-          <div className="text-sm text-neutral-700">Pending Exceptions</div>
+          <div className="text-sm text-neutral-700">
+            Kutilayotgan istisnolar
+          </div>
           <div className="text-2xl font-semibold">{pendingExceptions}</div>
         </div>
       </div>
 
       <div className="space-y-2 min-w-0">
-        <div className="text-sm text-neutral-600">Employees (This Month)</div>
+        <div className="text-sm text-neutral-600">Xodimlar (Bu oy)</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 min-w-0">
           {employees.map((e) => {
             const name = `${e.firstName} ${e.lastName}`;
@@ -168,8 +178,8 @@ export default async function DashboardPage() {
                     {e.email}
                   </div>
                   <div className="text-sm mt-1">
-                    {stats.fullDays} full · {stats.halfDays} half ·{" "}
-                    {stats.absences} abs · {stats.leaves} leave
+                    {stats.fullDays} to'liq · {stats.halfDays} yarim ·{" "}
+                    {stats.absences} yo'q · {stats.leaves} ta'til
                   </div>
                 </div>
               </div>

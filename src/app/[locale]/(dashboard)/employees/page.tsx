@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/table";
+// import { getTranslations } from "next-intl/server";
 
 type LeanEmployee = {
   _id: string;
@@ -19,20 +20,27 @@ type LeanEmployee = {
   status: string;
 };
 
-export default async function EmployeesPage() {
+export default async function EmployeesPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
+  if (!session) redirect(`/${locale}/login`);
   await connectToDatabase();
+
+  // const t = await getTranslations();
   const employees = (await Employee.find()
     .sort({ createdAt: -1 })
     .lean()) as unknown as LeanEmployee[];
   return (
     <div className="space-y-6 p-4 md:p-6 min-w-0">
-      <h1 className="text-2xl font-semibold">Employees</h1>
+      <h1 className="text-2xl font-semibold">Xodimlar</h1>
 
       <Card>
         <CardHeader>
-          <div className="font-medium">Add employee</div>
+          <div className="font-medium">Xodim qo'shish</div>
         </CardHeader>
         <CardContent>
           <form
@@ -40,15 +48,15 @@ export default async function EmployeesPage() {
             className="grid grid-cols-1 md:grid-cols-5 gap-3"
           >
             <div>
-              <Label htmlFor="firstName">First name</Label>
+              <Label htmlFor="firstName">Ism</Label>
               <Input id="firstName" name="firstName" placeholder="Jane" />
             </div>
             <div>
-              <Label htmlFor="lastName">Last name</Label>
+              <Label htmlFor="lastName">Familiya</Label>
               <Input id="lastName" name="lastName" placeholder="Doe" />
             </div>
             <div className="md:col-span-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Elektron pochta</Label>
               <Input
                 id="email"
                 name="email"
@@ -57,7 +65,7 @@ export default async function EmployeesPage() {
               />
             </div>
             <div>
-              <Label htmlFor="basePay">Base pay/hr</Label>
+              <Label htmlFor="basePay">Asosiy maosh</Label>
               <Input
                 id="basePay"
                 name="basePay"
@@ -67,7 +75,7 @@ export default async function EmployeesPage() {
               />
             </div>
             <div className="md:col-span-5">
-              <Button type="submit">Add Employee</Button>
+              <Button type="submit">Xodim qo'shish</Button>
             </div>
           </form>
         </CardContent>
@@ -75,16 +83,16 @@ export default async function EmployeesPage() {
 
       <Card>
         <CardHeader>
-          <div className="font-medium">Directory</div>
+          <div className="font-medium">Katalog</div>
         </CardHeader>
         <CardContent className="min-w-0">
           <Table>
             <THead>
               <TR>
-                <TH>Name</TH>
-                <TH>Email</TH>
-                <TH>Base Pay</TH>
-                <TH>Status</TH>
+                <TH>Ism</TH>
+                <TH>Elektron pochta</TH>
+                <TH>Asosiy maosh</TH>
+                <TH>Holat</TH>
               </TR>
             </THead>
             <TBody>

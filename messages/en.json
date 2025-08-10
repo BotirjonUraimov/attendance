@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "employees": "Employees",
+    "attendance": "Attendance",
+    "timesheets": "Timesheets",
+    "payroll": "Payroll",
+    "signOut": "Sign out"
+  },
+  "auth": {
+    "adminLogin": "Admin Login",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "invalidCredentials": "Invalid credentials"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "totalEmployees": "Employees",
+    "presentToday": "Present Today",
+    "daysThisMonth": "Days (This Month)",
+    "pendingExceptions": "Pending Exceptions",
+    "employeesThisMonth": "Employees (This Month)",
+    "full": "full",
+    "half": "half",
+    "abs": "abs",
+    "leave": "leave"
+  },
+  "employees": {
+    "title": "Employees",
+    "addEmployee": "Add employee",
+    "directory": "Directory",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "basePay": "Base Pay",
+    "status": "Status",
+    "name": "Name",
+    "addEmployeeButton": "Add Employee"
+  },
+  "attendance": {
+    "title": "Attendance",
+    "selectEmployees": "Select employees",
+    "date": "Date",
+    "type": "Type",
+    "portion": "Portion",
+    "present": "Present",
+    "absent": "Absent",
+    "leave": "Leave",
+    "holiday": "Holiday",
+    "fullDay": "Full day",
+    "halfDay": "Half day",
+    "save": "Save"
+  },
+  "timesheets": {
+    "title": "Timesheets"
+  },
+  "payroll": {
+    "title": "Payroll"
+  },
+  "common": {
+    "appTitle": "Attendance Admin",
+    "navigation": "Navigation",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  }
+}
