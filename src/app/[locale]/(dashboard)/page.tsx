@@ -120,23 +120,29 @@ export default async function DashboardPage({
           className="p-4 rounded min-w-0"
           style={{ background: "var(--color-accent)" }}
         >
-          <div className="text-sm text-neutral-700">Xodimlar</div>
+          <div className="text-sm text-neutral-700">
+            {t("dashboard.totalEmployees")}
+          </div>
           <div className="text-2xl font-semibold">{totalEmployees}</div>
         </div>
         <div
           className="p-4 rounded border min-w-0"
           style={{ borderColor: "var(--color-secondary)" }}
         >
-          <div className="text-sm text-neutral-700">Bugun kelganlar</div>
+          <div className="text-sm text-neutral-700">
+            {t("dashboard.presentToday")}
+          </div>
           <div className="text-2xl font-semibold">{presentToday}</div>
         </div>
         <div
           className="p-4 rounded border min-w-0"
           style={{ borderColor: "var(--color-secondary)" }}
         >
-          <div className="text-sm text-neutral-700">Kunlar (Bu oy)</div>
+          <div className="text-sm text-neutral-700">
+            {t("dashboard.daysThisMonth")}
+          </div>
           <div className="text-2xl font-semibold break-words">
-            {fullDays} to'liq · {halfDays} yarim
+            {fullDays} {t("dashboard.full")} · {halfDays} {t("dashboard.half")}
           </div>
         </div>
         <div
@@ -144,14 +150,16 @@ export default async function DashboardPage({
           style={{ borderColor: "var(--color-warning)" }}
         >
           <div className="text-sm text-neutral-700">
-            Kutilayotgan istisnolar
+            {t("dashboard.pendingExceptions")}
           </div>
           <div className="text-2xl font-semibold">{pendingExceptions}</div>
         </div>
       </div>
 
       <div className="space-y-2 min-w-0">
-        <div className="text-sm text-neutral-600">Xodimlar (Bu oy)</div>
+        <div className="text-sm text-neutral-600">
+          {t("dashboard.employeesThisMonth")}
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 min-w-0">
           {employees.map((e) => {
             const name = `${e.firstName} ${e.lastName}`;
@@ -178,8 +186,9 @@ export default async function DashboardPage({
                     {e.email}
                   </div>
                   <div className="text-sm mt-1">
-                    {stats.fullDays} to'liq · {stats.halfDays} yarim ·{" "}
-                    {stats.absences} yo'q · {stats.leaves} ta'til
+                    {stats.fullDays} {t("dashboard.full")} · {stats.halfDays}{" "}
+                    {t("dashboard.half")} · {stats.absences}{" "}
+                    {t("dashboard.abs")} · {stats.leaves} {t("dashboard.leave")}
                   </div>
                 </div>
               </div>

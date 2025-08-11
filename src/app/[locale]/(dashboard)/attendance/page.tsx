@@ -5,7 +5,7 @@ import { upsertAttendance } from "./actions";
 import { connectToDatabase } from "@/lib/db";
 import { Employee } from "@/models/Employee";
 import { EmployeeChecklist } from "./components/EmployeeChecklist";
-// import { getTranslations } from "next-intl/server";
+import { getTranslations } from "@/lib/translations";
 
 function todayIsoDate() {
   const d = new Date();
@@ -39,7 +39,7 @@ export default async function AttendancePage({
   if (!session) redirect(`/${locale}/login`);
   await connectToDatabase();
 
-  // const t = await getTranslations();
+  const t = getTranslations(locale);
   const docs = (await Employee.find()
     .sort({ firstName: 1, lastName: 1 })
     .lean()) as unknown as LeanEmployeeDoc[];
@@ -52,19 +52,21 @@ export default async function AttendancePage({
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Davomat</h1>
+      <h1 className="text-xl font-semibold">{t("attendance.title")}</h1>
       <form
         action={upsertAttendance}
         className="grid grid-cols-1 lg:grid-cols-6 gap-4"
       >
         <div className="lg:col-span-2 border rounded p-3 max-h-72 overflow-auto">
-          <div className="text-sm font-medium mb-2">Xodimlarni tanlang</div>
+          <div className="text-sm font-medium mb-2">
+            {t("attendance.selectEmployees")}
+          </div>
           <EmployeeChecklist employees={employees} />
           <input type="hidden" name="employeeId" />
         </div>
         <div className="lg:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-3 content-start">
           <div>
-            <label className="block text-sm mb-1">Sana</label>
+            <label className="block text-sm mb-1">{t("attendance.date")}</label>
             <input
               name="date"
               type="date"
@@ -73,23 +75,25 @@ export default async function AttendancePage({
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">Turi</label>
+            <label className="block text-sm mb-1">{t("attendance.type")}</label>
             <select name="type" className="border rounded px-2 py-1 w-full">
-              <option value="present">Kelgan</option>
-              <option value="absent">Kelmagan</option>
-              <option value="leave">Ta'til</option>
-              <option value="holiday">Bayram</option>
+              <option value="present">{t("attendance.present")}</option>
+              <option value="absent">{t("attendance.absent")}</option>
+              <option value="leave">{t("attendance.leave")}</option>
+              <option value="holiday">{t("attendance.holiday")}</option>
             </select>
           </div>
           <div>
-            <label className="block text-sm mb-1">Qismi</label>
+            <label className="block text-sm mb-1">
+              {t("attendance.portion")}
+            </label>
             <select
               name="portion"
               defaultValue="full"
               className="border rounded px-2 py-1 w-full"
             >
-              <option value="full">To'liq kun</option>
-              <option value="half">Yarim kun</option>
+              <option value="full">{t("attendance.fullDay")}</option>
+              <option value="half">{t("attendance.halfDay")}</option>
             </select>
           </div>
           <div className="md:col-span-3">
@@ -97,7 +101,7 @@ export default async function AttendancePage({
               className="text-white rounded px-3 py-2"
               style={{ background: "var(--color-primary)" }}
             >
-              Save
+              {t("attendance.save")}
             </button>
           </div>
         </div>

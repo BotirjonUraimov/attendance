@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth/config";
 import { redirect } from "next/navigation";
-// import { getTranslations } from "next-intl/server";
+import { getTranslations } from "@/lib/translations";
 
 export default async function PayrollPage({
   params,
@@ -12,11 +12,11 @@ export default async function PayrollPage({
   const session = await getServerSession(authOptions);
   if (!session) redirect(`/${locale}/login`);
 
-  // const t = await getTranslations();
+  const t = getTranslations(locale);
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Oylik hisob</h1>
+      <h1 className="text-xl font-semibold">{t("payroll.title")}</h1>
       <p>Calculate per-period payroll with allowances and deductions here.</p>
     </div>
   );
